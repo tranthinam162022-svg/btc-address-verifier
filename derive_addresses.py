@@ -12,7 +12,7 @@ import sys
 import getpass
 from typing import Dict
 
-from bip_utils import (
+from bip_utils import ( # type: ignore
     Bip39SeedGenerator,
     Bip44, Bip44Coins,
     Bip49, Bip49Coins,
@@ -20,18 +20,14 @@ from bip_utils import (
     Bip44Changes,
 )
 
-
 def load_mnemonic(args) -> str:
     if args.mnemonic_file:
         with open(args.mnemonic_file, "r", encoding="utf-8") as f:
             return f.read().strip()
     if args.mnemonic:
-        # Warning: passing mnemonic on CLI may expose it in process lists / history
         print("WARNING: Passing mnemonic on CLI may be insecure.")
         return args.mnemonic.strip()
-    # Secure interactive input
     return getpass.getpass("Enter mnemonic (hidden): ").strip()
-
 
 def derive_for_ctx(ctx, index: int, account: int = 0, change: int = 0) -> Dict:
     node = ctx.Purpose().Coin().Account(account).Change(Bip44Changes.CHAIN_EXT if change == 0 else Bip44Changes.CHAIN_INT).AddressIndex(index)
@@ -44,7 +40,6 @@ def derive_for_ctx(ctx, index: int, account: int = 0, change: int = 0) -> Dict:
         "wif": priv_obj.ToWif(),
         "pub_hex": pub_obj.RawCompressed().ToHex(),
     }
-
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Derive BTC addresses from mnemonic (BIP44/BIP49/BIP84)")
@@ -91,7 +86,6 @@ def main(argv=None):
                 print(f"    private_hex: {info['private_hex']}")
                 print(f"    wif: {info['wif']}")
             print()
-
 
 if __name__ == '__main__':
     main()
