@@ -1,4 +1,0 @@
-btc-com==0.0.1
-hdwallet==2.1.1
-pytest>=7.0.0
-bip-utils>=2.9.0
