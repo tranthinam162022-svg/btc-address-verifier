@@ -2,15 +2,12 @@ import requests
 from hdwallet import HDWallet
 from hdwallet.symbols import BTC as SYMBOL_BTC
 
-INPUT_FILE = "bip39_1000_private_keys.txt"
+INPUT_FILE = "New Text Document.txt"
 OUTPUT_FILE = "btc_balances.txt"
 BLOCKSTREAM_API = "https://blockstream.info/api/address/{}"
 
 
-def mnemonic_to_btc_address(mnemonic: str) -> str:
-    hdwallet = HDWallet(symbol=SYMBOL_BTC)
-    hdwallet.from_mnemonic(mnemonic)
-    return hdwallet.p2pkh_address()
+
 
 
 def get_btc_balance(address: str) -> int:
@@ -26,13 +23,12 @@ def get_btc_balance(address: str) -> int:
         return -1
 
 
-def main():
+
     with open(INPUT_FILE, "r", encoding="utf-8") as f:
-        mnemonics = [line.strip() for line in f if line.strip()]
+        addresses = [line.strip() for line in f if line.strip()]
 
     results = []
-    for mnemonic in mnemonics:
-        address = mnemonic_to_btc_address(mnemonic)
+    for address in addresses:
         balance = get_btc_balance(address)
         results.append(f"{address},{balance}")
         print(f"{address}: {balance}")
