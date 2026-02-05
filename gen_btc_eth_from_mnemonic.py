@@ -5,7 +5,7 @@ Tạo private key và địa chỉ cho cả Bitcoin (BTC) và Ethereum (ETH) t�
 """
 import argparse
 import getpass
-from bip_utils import (
+from bip_utils import ( # type: ignore
     Bip39SeedGenerator,
     Bip44, Bip44Coins,
     Bip44Changes,
